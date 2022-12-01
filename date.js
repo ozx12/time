@@ -3,7 +3,54 @@
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
 
+var now = new Date();
+
 const argv = yargs(hideBin(process.argv))
+  .command('$0', 'по умолчанию выводит текущую дата', () => { }, (argv) => {
+    console.log(now);
+  })
+  .command('current', 'текущая дата', () => { }, (argv) => {
+    if (argv.date) {
+      console.log(now.getDate());
+    } else
+      if (argv.month) {
+        console.log(now.getMonth());
+      } else
+        if (argv.year) {
+          console.log(now.getFullYear());
+        } else
+          console.log(now);
+  })
+  .command('add', 'получаем дату из будущего', () => { }, (argv) => {
+    if (argv.date) {
+      now.setDate(now.getDate());
+      console.log(now.getDate());
+    } else
+      if (argv.month) {
+        now.setMonth(now.getMonth() + argv.month);
+        console.log(now.getMonth());
+      } else
+        if (argv.year) {
+          now.setFullYear(now.getFullYear() + argv.year);
+          console.log(now.getFullYear());
+        } else
+          console.log(now);
+  })
+  .command('sub', 'получаем дату из прошлого', () => { }, (argv) => {
+    if (argv.date) {
+      now.setDate(now.getDate() + argv.month);
+      console.log(now.getDate());
+    } else
+      if (argv.month) {
+        now.setMonth(now.getMonth() + argv.month);
+        console.log(now.getMonth());
+      } else
+        if (argv.year) {
+          now.setFullYear(now.getFullYear() + argv.year);
+          console.log(now.getFullYear());
+        } else
+          console.log(now);
+  })
   .option('year', {
     alias: 'y',
     type: 'sring',
@@ -21,28 +68,7 @@ const argv = yargs(hideBin(process.argv))
   })
   .argv;
 
- if  (argv == "add") {
-  console.log('add');
- }
-var now = new Date();
-
-console.log( argv.year,  argv.date,  argv.month);
 
 
 
 
-if (argv.date) {
-  console.log('Date');
-} else
-  if (argv.month)
-{
-    console.log('month');
-  } else
-    if (argv.year)
-{
-      console.log('year');
-    } else {
-      console.log(now);
-    }
-
- 
